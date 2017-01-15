@@ -1,11 +1,11 @@
 "use strict"
 
-const gulp = require("gulp");
-const gpug = require("gulp-pug");                 // To support pug compile
-const gsass = require("gulp-sass");               // To support scss and sass compile
+const gulp = require('gulp');
+const gpug = require('gulp-pug');                 // To support pug compile
+const gsass = require('gulp-sass');               // To support scss and sass compile
+const gwebpack = require('gulp-webpack');         // To use webpack with gulp
 const typescript = require('gulp-typescript');    // To make gulp work with TypeScript compiler
 const sourcemaps = require('gulp-sourcemaps');    // To produce .map.js files while compiling
-const gwebpack = require('gulp-webpack');         // To use webpack with gulp
 const del = require('del');                       // To erase some file during cleaning tasks
 
 
@@ -36,6 +36,7 @@ gulp.task('lib:build', () => {
 });
 
 gulp.task('client:build', () => {
+  // TODO: find a way to make this work
   return gulp
     .src('src/client/app/main.ts')
     .pipe(gwebpack(wpconf))

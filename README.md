@@ -1,6 +1,6 @@
 # angular2-seed
 
-Cloned from https://github.com/angular/angular2-seed.
+Forked from https://github.com/angular/angular2-seed.
 This repo adds gulp and production build tools for a Node.js server.
 
 **Still under development**
