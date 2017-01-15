@@ -1,10 +1,13 @@
 "use strict"
 
 const gulp = require("gulp");
-const del = require('del');                       // To erase some file during cleaning tasks
+const gpug = require("gulp-pug");                 // To support pug compile
+const gsass = require("gulp-scss");               // To support scss and sass compile
 const typescript = require('gulp-typescript');    // To make gulp work with TypeScript compiler
 const sourcemaps = require('gulp-sourcemaps');    // To produce .map.js files while compiling
-const gwebpack = require('gulp-webpack');
+const gwebpack = require('gulp-webpack');         // To use webpack with gulp
+const del = require('del');                       // To erase some file during cleaning tasks
+
 
 // TODO: separate this config
 const tscConfig = require('./tsconfig.json');     // Gather the options for TypeScript compiler
@@ -39,11 +42,20 @@ gulp.task('client:build', () => {
     .pipe(gulp.dest('dist/client'));
 });
 
+gulp.task('client:pug', () => {
+  return gulp
+    .src('src/client/index.pug')
+    .pipe(gpug())
+    .pipe(gulp.dest('dist'));   // TODO: in a /client
+});
+
 gulp.task('client:static', () => {
   return gulp
-    .src(['src/client/index.html', 'src/client/favicon.ico'])
-    .pipe(gulp.dest('dist'));
+    .src(['src/client/favicon.ico'])
+    .pipe(gulp.dest('dist'));   // TODO; in a /client
 });
+
+gulp.task('client:assets', ['client:pug', 'client:static']);
 
 gulp.task('all:build', ['lib:build', 'server:build']);
 

@@ -36,7 +36,11 @@ var webpackConfig = {
         ]
       },
       { test: /\.css$/, loaders: ['to-string-loader', 'css-loader'] },
-      { test: /\.html$/, loader: 'raw-loader' }
+      { test: /\.html$/, loader: 'raw-loader' },
+      {
+        test: /\.pug$/,
+        loader: "pug-html-loader"
+      }
     ]
   }
 
