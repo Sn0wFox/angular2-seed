@@ -14,6 +14,7 @@ This repo adds gulp and production build tools for a Node.js server.
 - run `npm install` to install dependencies
 - run `gulp all:build` to build server-side
 - run `npm run build` to build client-side
+- run `gulp client:static` to copy static files
 - run `node dist/server/main.js` to start server
 - open browser to [`http://localhost:3000`](http://localhost:3000)
 
