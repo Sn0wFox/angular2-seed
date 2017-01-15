@@ -47,24 +47,20 @@ gulp.task('client:pug', () => {
   return gulp
     .src('src/client/index.pug')
     .pipe(gpug())
-    .pipe(gulp.dest('dist'));   // TODO: in a /client
+    .pipe(gulp.dest('dist/client'));
 });
 
 gulp.task('client:sass', () => {
   return gulp
     .src('src/client/index.scss')
     .pipe(gsass())
-    .on('error', (err) => {
-      console.error('\x07'); // so it doesn't just fail (literally) silently!
-      gsass.logError.bind(this)(err);
-    })
-    .pipe(gulp.dest('dist'));   // TODO: in a /client
+    .pipe(gulp.dest('dist/client'));
 });
 
 gulp.task('client:static', () => {
   return gulp
     .src(['src/client/favicon.ico'])
-    .pipe(gulp.dest('dist'));   // TODO; in a /client
+    .pipe(gulp.dest('dist/client'));
 });
 
 gulp.task('client:assets', ['client:pug', 'client:sass', 'client:static']);

@@ -8,7 +8,7 @@ const app: any = express();
 
 console.log(path.resolve(__dirname + "/.."));
 
-app.use(express.static(path.resolve(__dirname + "/..")));
+app.use(express.static(path.resolve(__dirname + "/../client")));
 
 app.set('port', process.env.PORT || 3000);
 

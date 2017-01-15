@@ -10,7 +10,7 @@ var webpackConfig = {
 
   output: {
     publicPath: '',
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, './dist/client'),
   },
 
   plugins: [
@@ -26,7 +26,6 @@ var webpackConfig = {
 
   module: {
     loaders: [
-      // .ts files for TypeScript
       {
         test: /\.ts$/,
         loaders: [
@@ -35,8 +34,14 @@ var webpackConfig = {
           'angular2-router-loader'
         ]
       },
-      { test: /\.css$/, loaders: ['to-string-loader', 'css-loader'] },
-      { test: /\.html$/, loader: 'raw-loader' },
+      {
+        test: /\.css$/,
+        loaders: ['to-string-loader', 'css-loader']
+      },
+      {
+        test: /\.html$/,
+        loader: 'raw-loader'
+      },
       {
         test: /\.pug$/,
         loader: "pug-html-loader"
