@@ -1,13 +1,23 @@
-## angular2-seed
+# angular2-seed
 
-A simple starter project demonstrating the basic concepts of Angular 2.
+Cloned from https://github.com/angular/angular2-seed.
+This repo adds gulp and production build tools for a Node.js server.
 
+**Still under development.**
 
-### Usage
-- Clone or fork this repository
+## Prerequisites
 - Make sure you have [node.js](https://nodejs.org/) installed version 5+
 - Make sure you have NPM installed version 3+
-- `WINDOWS ONLY` run `npm install -g webpack webpack-dev-server typescript` to install global dependencies
+- `WINDOWS ONLY` run `npm install -g gulp-cli webpack webpack-dev-server typescript` to install global dependencies
+
+## Usage
+- run `npm install` to install dependencies
+- run `gulp all:build` to build server-side
+- run `npm run build` to build client-side
+- run `node dist/server/main.js` to start server
+- open browser to [`http://localhost:3000`](http://localhost:3000)
+
+## (OLD CONF) Dev-server
 - run `npm install` to install dependencies
 - run `npm start` to fire up dev server
 - open browser to [`http://localhost:3000`](http://localhost:3000)
