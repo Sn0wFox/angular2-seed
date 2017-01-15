@@ -3,7 +3,7 @@
 Cloned from https://github.com/angular/angular2-seed.
 This repo adds gulp and production build tools for a Node.js server.
 
-**Still under development.**
+**Still under development**
 
 ## Prerequisites
 - Make sure you have [node.js](https://nodejs.org/) installed version 5+
@@ -22,3 +22,8 @@ This repo adds gulp and production build tools for a Node.js server.
 - run `npm start` to fire up dev server
 - open browser to [`http://localhost:3000`](http://localhost:3000)
 - if you want to use other port, open `package.json` file, then change port in `--port 3000` script
+
+## (DEV) TODOs
+- Add support for .pug files (client side)
+- Add support for .scss/.sass files (client side)
+- Add a way to build client side with gulp
