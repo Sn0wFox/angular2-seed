@@ -39,6 +39,12 @@ gulp.task('client:build', () => {
     .pipe(gulp.dest('dist/client'));
 });
 
+gulp.task('client:static', () => {
+  return gulp
+    .src(['src/client/index.html', 'src/client/favicon.ico'])
+    .pipe(gulp.dest('dist'));
+});
+
 gulp.task('all:build', ['lib:build', 'server:build']);
 
 gulp.task('all:clean', () => {

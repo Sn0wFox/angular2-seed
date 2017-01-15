@@ -6,9 +6,9 @@ import * as Lib from "../lib/lib-test";
 
 const app: any = express();
 
-console.log(__dirname);
+console.log(path.resolve(__dirname + "/.."));
 
-app.use(express.static(path.resolve(__dirname + "/../app")));
+app.use(express.static(path.resolve(__dirname + "/..")));
 
 app.set('port', process.env.PORT || 3000);
 
