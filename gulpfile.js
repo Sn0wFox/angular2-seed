@@ -19,7 +19,7 @@ const wpconf = require('./webpack.config.js');
  */
 gulp.task('server:build', () => {
   return gulp
-    .src(['src/server/**/*.ts', 'node_modules/@types/**/*.ts'])
+    .src(['src/server/**/*.ts', 'node_modules/@types/**/*.ts', 'src/custom-typings/**/*.ts'])
     .pipe(sourcemaps.init())
     .pipe(typescript(tscConfig.compilerOptions))
     .pipe(sourcemaps.write('.'))
