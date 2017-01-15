@@ -2,7 +2,7 @@
 
 const gulp = require("gulp");
 const gpug = require("gulp-pug");                 // To support pug compile
-const gsass = require("gulp-scss");               // To support scss and sass compile
+const gsass = require("gulp-sass");               // To support scss and sass compile
 const typescript = require('gulp-typescript');    // To make gulp work with TypeScript compiler
 const sourcemaps = require('gulp-sourcemaps');    // To produce .map.js files while compiling
 const gwebpack = require('gulp-webpack');         // To use webpack with gulp
@@ -49,13 +49,24 @@ gulp.task('client:pug', () => {
     .pipe(gulp.dest('dist'));   // TODO: in a /client
 });
 
+gulp.task('client:sass', () => {
+  return gulp
+    .src('src/client/index.scss')
+    .pipe(gsass())
+    .on('error', (err) => {
+      console.error('\x07'); // so it doesn't just fail (literally) silently!
+      gsass.logError.bind(this)(err);
+    })
+    .pipe(gulp.dest('dist'));   // TODO: in a /client
+});
+
 gulp.task('client:static', () => {
   return gulp
     .src(['src/client/favicon.ico'])
     .pipe(gulp.dest('dist'));   // TODO; in a /client
 });
 
-gulp.task('client:assets', ['client:pug', 'client:static']);
+gulp.task('client:assets', ['client:pug', 'client:sass', 'client:static']);
 
 gulp.task('all:build', ['lib:build', 'server:build']);
 
