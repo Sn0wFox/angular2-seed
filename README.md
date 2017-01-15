@@ -22,6 +22,6 @@ This repo adds gulp and production build tools for a Node.js server.
 - if you want to use other port, open `package.json` file, then change port in `--port 3000` script
 
 ## (DEV) TODOs
-- Add support for .pug files (client side)
+- ~~Add support for .pug files (client side)~~
 - Add support for .scss/.sass files (client side)
 - Add a way to build client side with gulp
