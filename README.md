@@ -25,7 +25,9 @@ This repo adds gulp and production build tools for a Node.js server.
 - ~~Add support for .pug files (client side)~~
 - ~~Add support for .scss/.sass files (client side)~~
 - Add support for custom typings folder
-- Add support for import from `src/lib` client side
+- ~~Add support for import from `src/lib` client side~~
+- ~~Add support for import from `src/lib` server side~~
 - Add a way to build client side with gulp
 - Add genericity for static .pug files (build)
 - Add genericity for static scss/sass files (build)
+- Add genericity for folder other than `client` and `server`
