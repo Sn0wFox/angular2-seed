@@ -92,7 +92,7 @@ gulp.task('client:build:assets', ['client:build:pug', 'client:build:sass', 'clie
  * NOTE:  when client:build will work,
  *        this should build client too.
  */
-gulp.task('all:build', ['lib:build', 'server:build'/*, 'client:build'*/]);
+gulp.task('all:build', ['lib:build', 'server:build', 'client:build']);
 
 
 /* IN DEV TASKS */
@@ -101,11 +101,9 @@ gulp.task('all:build', ['lib:build', 'server:build'/*, 'client:build'*/]);
  * Build client javascript with webpack.
  * This doesn't work yet.
  */
-// TODO: find a way to make this work
 gulp.task('client:build:ts', () => {
-  return gulp
-    .src('src/client/app/main.ts')
-    .pipe(gwebpack(wpconf))
+  wpconf.resolve.extensions.push('');
+  return gwebpack(wpconf)
     .pipe(gulp.dest('dist/client'));
 });
 
@@ -113,4 +111,4 @@ gulp.task('client:build:ts', () => {
  * Build all files needed client-side.
  * Can't work until client:build:ts works.
  */
-// gulp.task('client:build', ['client:build:ts', 'client:build:assets']);
+gulp.task('client:build', ['client:build:ts', 'client:build:assets']);

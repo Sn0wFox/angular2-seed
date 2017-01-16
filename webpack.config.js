@@ -5,7 +5,7 @@ var webpackMerge = require('webpack-merge');
 // Webpack Config
 var webpackConfig = {
   entry: {
-    'main': './src/client/main.browser.ts'
+    'main':'./src/client/main.browser'
   },
 
   output: {
@@ -51,6 +51,10 @@ var webpackConfig = {
         loaders: ['raw-loader', 'sass-loader']
       }
     ]
+  },
+  
+  stats: {
+    errorDetails: true
   }
 
 };
@@ -67,7 +71,7 @@ var defaultConfig = {
   },
 
   resolve: {
-    extensions: [ '.ts', '.js' ],
+    extensions: [ '.ts', '.js', '.sccs', '.sass', 'css', '.pug', '.html' ],
     modules: [ path.resolve(__dirname, 'node_modules') ]
   },
 
