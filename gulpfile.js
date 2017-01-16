@@ -4,10 +4,10 @@ const gulp = require('gulp');                     // Local gulp lib
 const gutil = require('gulp-util');               // To add some logs
 const gpug = require('gulp-pug');                 // To support pug compile
 const gsass = require('gulp-sass');               // To support scss and sass compile
-const gwebpack = require('gulp-webpack');         // To use webpack with gulp
 const typescript = require('gulp-typescript');    // To make gulp work with TypeScript compiler
 const sourcemaps = require('gulp-sourcemaps');    // To produce .map.js files while compiling
-const webpack = require('webpack-stream');
+const webpack = require('webpack');               // Local webpack lib
+const gwebpack = require('webpack-stream');       // To use webpack with gulp
 const del = require('del');                       // To erase some file during cleaning tasks
 
 // TODO: separate this config
@@ -46,20 +46,11 @@ gulp.task('lib:build', () => {
 /**
  * Build client javascript with webpack.
  */
-gulp.task('client:build:ts', () => {
-  // NOTE:  for some reasons, webpack-stream can't resolve files when
-  //        their extension is already written without an empty string
-  //        in the resolve.extensions array in the config file.
-  //        However, webpack CLI considers it as a not well formated
-  //        config file, so we have to add it manually here.
-  //        The same behaviour exists for gulp-webpack.
-  wpconf.resolve.extensions.push('');
-  // No equivalent of --progress is availlable through config file,
-  // so at least we can log something to tell the user that webpack is running.
-  gutil.log(gutil.colors.green("Javascript client-side is being built by webpack..."));
+gulp.task('client:build:webpack', (callback) => {
+  // TODO: add progress bar.
   return gulp
     .src('src/client/main.browser.ts')
-    .pipe(webpack(wpconf))
+    .pipe(gwebpack(wpconf, webpack))
     .pipe(gulp.dest('dist/client'));
 });
 
@@ -132,7 +123,7 @@ gulp.task('client:build:assets', ['client:build:pug', 'client:build:sass', 'clie
  * Build all files needed client-side
  * (.ts, .pug, .html, .sass, .scss, .css, client/static/*).
  */
-gulp.task('client:build', ['client:build:ts', 'client:build:assets']);
+gulp.task('client:build', ['client:build:webpack', 'client:build:assets']);
 
 /**
  * Build all javascript files,

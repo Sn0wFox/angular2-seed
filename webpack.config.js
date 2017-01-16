@@ -21,7 +21,10 @@ var webpackConfig = {
       {
         // your Angular Async Route paths relative to this root directory
       }
-    ),
+    )/*,
+    new webpack.ProgressPlugin(function(percentage, msg) {
+      console.log((percentage * 100) + '%', msg);
+    })*/
   ],
 
   module: {
