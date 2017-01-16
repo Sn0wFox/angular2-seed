@@ -34,4 +34,5 @@ This repo adds gulp and production build tools for a Node.js server.
 - ~~Add genericity for global .scss/sass files (build)~~
 - ~~Add genericity for static files (build)~~
 - Add genericity for folders other than `client` and `server` (build)
-- Add more logs
+- ~~Add more logs~~
+- Add equivalent of --progress (webpack) in client:build:ts

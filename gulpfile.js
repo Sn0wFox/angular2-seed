@@ -1,6 +1,7 @@
 "use strict"
 
 const gulp = require('gulp');                     // Local gulp lib
+const gutil = require('gulp-util');               // To add some logs
 const gpug = require('gulp-pug');                 // To support pug compile
 const gsass = require('gulp-sass');               // To support scss and sass compile
 const gwebpack = require('gulp-webpack');         // To use webpack with gulp
@@ -51,6 +52,9 @@ gulp.task('client:build:ts', () => {
   //        However, webpack CLI considers it as a not well formated
   //        config file, so we have to add it manually here.
   wpconf.resolve.extensions.push('');
+  // No equivalent of --progress is availlable through config file,
+  // so at least we can log something to tell the user that webpack is running.
+  gutil.log(gutil.colors.green("Javascript client-side is being built by webpack..."));
   return gwebpack(wpconf)
     .pipe(gulp.dest('dist/client'));
 });
@@ -99,6 +103,17 @@ gulp.task('client:build:static', () => {
  */
 gulp.task('all:clean', () => {
   return del('dist/**/*');
+});
+
+/**
+ * Logs a red message telling the user that the script
+ * he just used is deprecated.
+ */
+gulp.task('log:deprecated', () => {
+  return gutil.log(gutil.colors.red(
+    "DEPRECATED - " +
+    "The use of this script is deprecated. " +
+    "Please be aware that this may not be avaiillable in a future version."));
 });
 
 

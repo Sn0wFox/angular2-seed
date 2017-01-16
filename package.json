@@ -6,7 +6,7 @@
     "deploy": "gulp all:clean && gulp all:build && node dist/server/main.js",
     "watch": "npm run build -- --watch",
     "server": "webpack-dev-server --inline --progress --port 3000 --content-base src",
-    "build:client": "webpack --progress",
+    "build:client": "gulp log:deprecated && webpack --progress",
     "start": "npm run server"
   },
   "contributors": [
@@ -52,6 +52,7 @@
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.4.0",
     "gulp-typescript": "^3.1.4",
+    "gulp-util": "^3.0.8",
     "gulp-webpack": "^1.5.0",
     "pug-html-loader": "^1.1.0",
     "raw-loader": "^0.5.1",
