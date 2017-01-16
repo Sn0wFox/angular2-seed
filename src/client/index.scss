@@ -1,3 +1,13 @@
 body {
-  background-color: #84aff4
+  background-color: #6fc0e5;
+}
+
+$color: red;
+
+ol {
+  background-color: $color;
+
+  li {
+    background-color: $color;
+  }
 }

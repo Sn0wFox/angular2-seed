@@ -63,7 +63,7 @@ gulp.task('client:build:materialize', () => {
       'node_modules/materialize-css/dist/css/materialize.css',
       'node_modules/materialize-css/dist/js/materialize.js',
       'node_modules/materialize-css/dist/fonts/**/*'
-    ])
+    ], { base: 'node_modules/materialize-css/dist/' })
     .pipe(gulp.dest('dist/client/static'));
 });
 
