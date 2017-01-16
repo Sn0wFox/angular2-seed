@@ -6,8 +6,8 @@ import {ApiService} from "../services/api.service";
 @Component({
   selector: "mmg-search",
   moduleId: "search/search-bar/search-bar.component",
-  templateUrl: "search-bar.component.html",
-  styleUrls: ["search-bar.component.css"]
+  templateUrl: "search-bar.component.pug",
+  styleUrls: ["search-bar.component.scss"]
 })
 export class SearchBarComponent implements OnInit {
   private apiService: ApiService;

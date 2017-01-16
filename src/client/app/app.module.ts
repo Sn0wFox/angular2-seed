@@ -1,42 +1,42 @@
+// Angular2 nativ modules
 import { NgModule } from '@angular/core'
-import { RouterModule } from '@angular/router';
-import { rootRouterConfig } from './app.routes';
-import { AppComponent } from './app.component';
-import { GithubService } from './github/shared/github.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 
-import { AboutComponent } from './about/about.component';
-import { HomeComponent } from './home/home.component';
-import { RepoBrowserComponent } from './github/repo-browser/repo-browser.component';
-import { RepoListComponent } from './github/repo-list/repo-list.component';
-import { RepoDetailComponent } from './github/repo-detail/repo-detail.component';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { ContactComponent } from './contact/contact.component';
+// Angular2 custom modules
+import {AboutModule} from './about/about.module';
+import {HomeModule} from './home/home.module';
+import {ResponseModule} from './response/response.module';
+import {SearchModule} from './search/search.module';
+import {AppRoutingModule} from './app-routing.module';
+
+// Components for this module
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    AboutComponent,
-    RepoBrowserComponent,
-    RepoListComponent,
-    RepoDetailComponent,
-    HomeComponent,
-    ContactComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule.forRoot(rootRouterConfig, { useHash: true })
+    HomeModule,
+    AboutModule,
+    SearchModule,
+    ResponseModule,
+    AppRoutingModule
   ],
-  providers: [
-    GithubService
+  exports: [
+    HomeModule,
+    AboutModule,
+    SearchModule,
+    ResponseModule,
+    AppRoutingModule
   ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {
-
 }

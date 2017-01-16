@@ -1,22 +1,9 @@
-import {Component} from '@angular/core';
-import {OnInit} from '@angular/core';
-
-import * as Lib from '../../../lib/lib-test';
+import {Component} from "@angular/core";
 
 @Component({
-  selector: 'about',
-  styleUrls: ['./about.component.css'],
-  templateUrl: './about.component.html'
+  selector: "about",
+  moduleId: "about/about.component",
+  template: "About component"
 })
-export class AboutComponent implements OnInit {
-
-  protected info: string;
-  
-  ngOnInit(): void {
-    Lib
-      .myFunction()
-      .then((info: string) => {
-        this.info = info;
-      });
-  }
+export class AboutComponent {
 }

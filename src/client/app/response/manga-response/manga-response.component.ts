@@ -14,8 +14,8 @@ const MANGATEST: Manga = {
 @Component({
   selector: "mmg-manga-response",
   moduleId: "response/manga-response/manga-response.component",
-  templateUrl: "manga-response.component.html",
-  styleUrls: ["manga-response.component.css"]
+  templateUrl: "manga-response.component.pug",
+  styleUrls: ["manga-response.component.scss"]
 })
 export class MangaComponent implements OnInit {
   protected manga: Manga;

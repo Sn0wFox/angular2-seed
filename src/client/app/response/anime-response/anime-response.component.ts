@@ -8,8 +8,8 @@ const ANIMETEST: Anime = {
 @Component({
   selector: "mmg-anime-response",
   moduleId: "response/anime-response/anime-response.component",
-  templateUrl: "anime-response.component.html",
-  styleUrls: ["anime-response.component.css"]
+  templateUrl: "anime-response.component.pug",
+  styleUrls: ["anime-response.component.scss"]
 })
 export class AnimeComponent implements OnInit {
   anime: Anime = ANIMETEST;
