@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2015",
     "module": "commonjs",
     "outDir": "dist",
     "rootDir": ".",
@@ -10,7 +10,8 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "typeRoots": [
-      "node_modules/@types"
+      "node_modules/@types",
+      "src/custom-typings"
     ],
     "lib": ["es6", "dom"]
   },
