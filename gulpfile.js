@@ -76,6 +76,15 @@ gulp.task('client:build:sass', () => {
 });
 
 /**
+ * Copies html and css files at the root of src/client.
+ */
+gulp.task('client:build:htmlcss', () => {
+  return gulp
+    .src(['src/client/*.html', 'src/client/*.css'])
+    .pipe(gulp.dest('dist/client'));
+});
+
+/**
  * Copies static files (e.g. pictures, .ico)
  * from src/client/static into dist/client/static.
  */
@@ -98,7 +107,7 @@ gulp.task('all:clean', () => {
 /**
  * Builds all files other than javascript needed client-side.
  */
-gulp.task('client:build:assets', ['client:build:pug', 'client:build:sass', 'client:build:static']);
+gulp.task('client:build:assets', ['client:build:pug', 'client:build:sass', 'client:build:htmlcss', 'client:build:static']);
 
 /**
  * Build all files needed client-side
