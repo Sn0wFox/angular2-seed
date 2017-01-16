@@ -46,12 +46,25 @@ gulp.task('lib:build', () => {
 /**
  * Build client javascript with webpack.
  */
-gulp.task('client:build:webpack', (callback) => {
+gulp.task('client:build:webpack', () => {
   // TODO: add progress bar.
   return gulp
     .src('src/client/main.browser.ts')
     .pipe(gwebpack(wpconf, webpack))
     .pipe(gulp.dest('dist/client'));
+});
+
+/**
+ * Copies materialize-css files from node_modules.
+ */
+gulp.task('client:build:materialize', () => {
+  return gulp
+    .src([
+      'node_modules/materialize-css/dist/css/materialize.css',
+      'node_modules/materialize-css/dist/js/materialize.js',
+      'node_modules/materialize-css/dist/fonts/**/*'
+    ])
+    .pipe(gulp.dest('dist/client/static'));
 });
 
 /**
@@ -117,7 +130,7 @@ gulp.task('log:deprecated', () => {
 /**
  * Builds all files other than javascript needed client-side.
  */
-gulp.task('client:build:assets', ['client:build:pug', 'client:build:sass', 'client:build:htmlcss', 'client:build:static']);
+gulp.task('client:build:assets', ['client:build:pug', 'client:build:sass', 'client:build:htmlcss', 'client:build:static', 'client:build:materialize']);
 
 /**
  * Build all files needed client-side
