@@ -15,7 +15,8 @@
     "lib": ["es6", "dom"]
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/custom-typings"
   ],
   "awesomeTypescriptLoaderOptions": {
     "useWebpackText": true
