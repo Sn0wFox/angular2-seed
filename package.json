@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "A simple starter Angular2 project",
   "scripts": {
-    "build": "webpack --progress",
+    "deploy": "gulp all:clean && gulp all:build && node dist/server/main.js",
     "watch": "npm run build -- --watch",
     "server": "webpack-dev-server --inline --progress --port 3000 --content-base src",
-    "deploy": "gulp all:clean && gulp all:build && gulp client:build:assets && npm run build && node dist/server/main.js",
+    "build:client": "webpack --progress",
     "start": "npm run server"
   },
   "contributors": [

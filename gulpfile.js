@@ -42,6 +42,20 @@ gulp.task('lib:build', () => {
 });
 
 /**
+ * Build client javascript with webpack.
+ */
+gulp.task('client:build:ts', () => {
+  // NOTE:  for some reasons, gulp-webpack can't resolve files when
+  //        their extension is already written without an empty string
+  //        in the resolve.extensions array in the config file.
+  //        However, webpack CLI considers it as a not well formated
+  //        config file, so we have to add it manually here.
+  wpconf.resolve.extensions.push('');
+  return gwebpack(wpconf)
+    .pipe(gulp.dest('dist/client'));
+});
+
+/**
  * Compiles Pug files at the root of src/client.
  */
 gulp.task('client:build:pug', () => {
@@ -56,7 +70,7 @@ gulp.task('client:build:pug', () => {
  */
 gulp.task('client:build:sass', () => {
   return gulp
-    .src('src/client/index.scss')
+    .src(['src/client/*.scss', 'src/client/*.sass'])
     .pipe(gsass())
     .pipe(gulp.dest('dist/client'));
 });
@@ -87,28 +101,15 @@ gulp.task('all:clean', () => {
 gulp.task('client:build:assets', ['client:build:pug', 'client:build:sass', 'client:build:static']);
 
 /**
+ * Build all files needed client-side
+ * (.ts, .pug, .html, .sass, .scss, .css, client/static/*).
+ */
+gulp.task('client:build', ['client:build:ts', 'client:build:assets']);
+
+/**
  * Build all javascript files,
  * except those needed client-side.
  * NOTE:  when client:build will work,
  *        this should build client too.
  */
 gulp.task('all:build', ['lib:build', 'server:build', 'client:build']);
-
-
-/* IN DEV TASKS */
-
-/**
- * Build client javascript with webpack.
- * This doesn't work yet.
- */
-gulp.task('client:build:ts', () => {
-  wpconf.resolve.extensions.push('');
-  return gwebpack(wpconf)
-    .pipe(gulp.dest('dist/client'));
-});
-
-/**
- * Build all files needed client-side.
- * Can't work until client:build:ts works.
- */
-gulp.task('client:build', ['client:build:ts', 'client:build:assets']);
