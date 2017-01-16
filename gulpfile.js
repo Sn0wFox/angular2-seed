@@ -7,6 +7,7 @@ const gsass = require('gulp-sass');               // To support scss and sass co
 const gwebpack = require('gulp-webpack');         // To use webpack with gulp
 const typescript = require('gulp-typescript');    // To make gulp work with TypeScript compiler
 const sourcemaps = require('gulp-sourcemaps');    // To produce .map.js files while compiling
+const webpack = require('webpack-stream');
 const del = require('del');                       // To erase some file during cleaning tasks
 
 // TODO: separate this config
@@ -46,16 +47,19 @@ gulp.task('lib:build', () => {
  * Build client javascript with webpack.
  */
 gulp.task('client:build:ts', () => {
-  // NOTE:  for some reasons, gulp-webpack can't resolve files when
+  // NOTE:  for some reasons, webpack-stream can't resolve files when
   //        their extension is already written without an empty string
   //        in the resolve.extensions array in the config file.
   //        However, webpack CLI considers it as a not well formated
   //        config file, so we have to add it manually here.
+  //        The same behaviour exists for gulp-webpack.
   wpconf.resolve.extensions.push('');
   // No equivalent of --progress is availlable through config file,
   // so at least we can log something to tell the user that webpack is running.
   gutil.log(gutil.colors.green("Javascript client-side is being built by webpack..."));
-  return gwebpack(wpconf)
+  return gulp
+    .src('src/client/main.browser.ts')
+    .pipe(webpack(wpconf))
     .pipe(gulp.dest('dist/client'));
 });
 
