@@ -126,8 +126,9 @@ gulp.task('log:deprecated', () => {
     "Please be aware that this may not be avaiillable in a future version."));
 });
 
+// TODO: make it finish !
 gulp.task('test', (done) => {
-  new Server({
+  return new Server({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true
   }, done).start();
