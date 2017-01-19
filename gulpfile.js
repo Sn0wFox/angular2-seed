@@ -14,6 +14,7 @@ const del = require('del');                       // To erase some file during c
 // TODO: separate this config
 const tscConfig = require('./tsconfig.json');     // Gather the options for TypeScript compiler
 const wpconf = require('./webpack.config.js');
+var Server = require('karma').Server;
 
 
 /* BASIC TASKS */
@@ -125,23 +126,11 @@ gulp.task('log:deprecated', () => {
     "Please be aware that this may not be avaiillable in a future version."));
 });
 
-gulp.task('test:build', () => {
-  let conf = Object.assign({}, wpconf);
-  delete conf.entry;
-  return gulp
-    .src('src/**/*.spec.ts')
-    .pipe(gwebpack(conf, webpack))
-    .pipe(gulp.dest('test'));
-});
-
-gulp.task('test:clean', () => {
-  return del('test/**/*');
-});
-
-gulp.task('test', () => {
-  return gulp
-    .src('test/main.bundle.js')
-    .pipe(gjasmine());
+gulp.task('test', (done) => {
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
 });
 
 

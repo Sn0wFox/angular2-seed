@@ -11,6 +11,8 @@ module.exports = function(config) {
     karmaTypescriptConfig: {
       tsconfig: "./tsconfig.json"
     },
+    
+    webpack: require('./webpack.config.js'),
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -18,8 +20,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'src/**/*.ts',
-      'src/**/*.spec.ts'
+      { pattern: './src/client/test.ts', watched: false }
     ],
 
     // list of files to exclude
@@ -29,7 +30,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      '**/*.ts': ['karma-typescript']
+      'src/client/test.ts': ['webpack']
     },
 
     // test results reporter to use
