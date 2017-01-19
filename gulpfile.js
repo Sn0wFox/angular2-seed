@@ -4,6 +4,7 @@ const gulp = require('gulp');                     // Local gulp lib
 const gutil = require('gulp-util');               // To add some logs
 const gpug = require('gulp-pug');                 // To support pug compile
 const gsass = require('gulp-sass');               // To support scss and sass compile
+const gjasmine = require('gulp-jasmine');         // To build and run tests
 const typescript = require('gulp-typescript');    // To make gulp work with TypeScript compiler
 const sourcemaps = require('gulp-sourcemaps');    // To produce .map.js files while compiling
 const webpack = require('webpack');               // Local webpack lib
@@ -122,6 +123,25 @@ gulp.task('log:deprecated', () => {
     "DEPRECATED - " +
     "The use of this script is deprecated. " +
     "Please be aware that this may not be avaiillable in a future version."));
+});
+
+gulp.task('test:build', () => {
+  let conf = Object.assign({}, wpconf);
+  delete conf.entry;
+  return gulp
+    .src('src/**/*.spec.ts')
+    .pipe(gwebpack(conf, webpack))
+    .pipe(gulp.dest('test'));
+});
+
+gulp.task('test:clean', () => {
+  return del('test/**/*');
+});
+
+gulp.task('test', () => {
+  return gulp
+    .src('test/main.bundle.js')
+    .pipe(gjasmine());
 });
 
 
