@@ -138,6 +138,20 @@ gulp.task('client:test', (done) => {
   }, done)).start();
 });
 
+gulp.task('server:test:build', () => {
+  return gulp.src("src/server/**/*.spec.ts")
+    .pipe(typescript(tscConfig.compilerOptions))
+    .pipe(gulp.dest('dist/server'));
+});
+
+gulp.task('server:test:run', () => {
+  return gulp.src("dist/server/**/*.spec.js")
+    .pipe(gjasmine());
+});
+
+gulp.task('server:test:clean', () => {
+  return del('dist/server/**/*.spec.js');
+});
 
 /* COMPOSED TASKS */
 
