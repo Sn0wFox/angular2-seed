@@ -10,11 +10,11 @@ const sourcemaps = require('gulp-sourcemaps');    // To produce .map.js files wh
 const webpack = require('webpack');               // Local webpack lib
 const gwebpack = require('webpack-stream');       // To use webpack with gulp
 const del = require('del');                       // To erase some file during cleaning tasks
+const karma = require('karma');                   // To run server side tests
 
 // TODO: separate this config
 const tscConfig = require('./tsconfig.json');     // Gather the options for TypeScript compiler
 const wpconf = require('./webpack.config.js');
-var Server = require('karma').Server;
 
 
 /* BASIC TASKS */
@@ -131,7 +131,7 @@ gulp.task('log:deprecated', () => {
  * NOTE: Forefox browser needs to be installed !
  */
 gulp.task('client:test', (done) => {
-  return (new Server({
+  return (new karma.Server({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true,
     browsers: ["Firefox"]
@@ -171,13 +171,20 @@ gulp.task('server:test:clean', () => {
 /**
  * Builds all files other than javascript needed client-side.
  */
-gulp.task('client:build:assets', ['client:build:pug', 'client:build:sass', 'client:build:htmlcss', 'client:build:static', 'client:build:materialize']);
+gulp.task('client:build:assets', gulp.parallel(
+  'client:build:pug',
+  'client:build:sass',
+  'client:build:htmlcss',
+  'client:build:static',
+  'client:build:materialize'));
 
 /**
  * Build all files needed client-side
  * (.ts, .pug, .html, .sass, .scss, .css, client/static/*).
  */
-gulp.task('client:build', ['client:build:webpack', 'client:build:assets']);
+gulp.task('client:build', gulp.parallel(
+  'client:build:webpack',
+  'client:build:assets'));
 
 /**
  * Build all javascript files,
@@ -185,4 +192,7 @@ gulp.task('client:build', ['client:build:webpack', 'client:build:assets']);
  * NOTE:  when client:build will work,
  *        this should build client too.
  */
-gulp.task('all:build', ['lib:build', 'server:build', 'client:build']);
+gulp.task('all:build', gulp.parallel(
+  'lib:build',
+  'server:build',
+  'client:build'));
