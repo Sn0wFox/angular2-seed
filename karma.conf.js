@@ -12,6 +12,7 @@ module.exports = function(config) {
       tsconfig: "./tsconfig.json"
     },
     
+    // use the custom global config for webpack
     webpack: require('./webpack.config.js'),
 
     // frameworks to use
