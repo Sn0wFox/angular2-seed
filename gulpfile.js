@@ -25,7 +25,7 @@ const wpconf = require('./webpack.config.js');
  */
 gulp.task('server:build', () => {
   return gulp
-    .src(['src/server/**/*.ts', 'node_modules/@types/**/*.ts', 'src/custom-typings/**/*.ts'])
+    .src(['src/server/**/*.ts', 'node_modules/@types/**/*.ts', 'src/custom-typings/**/*.ts', '!src/server/**/*.spec.ts'])
     .pipe(sourcemaps.init())
     .pipe(typescript(tscConfig.compilerOptions))
     .pipe(sourcemaps.write('.'))
@@ -152,17 +152,20 @@ gulp.task('server:test:build', () => {
  * Runs all files .spec.js server side,
  * aka server side tests.
  */
-gulp.task('server:test:run', () => {
-  return gulp.src("dist/server/**/*.spec.js")
+gulp.task('server:test:run', (done) => {
+  return gulp.src('dist/server/**/*.spec.js')
     .pipe(gjasmine())
-    .on('error', gutil.log);
+    .on('error', (err) => {
+      gutil.log(err);
+      return done();
+    });
 });
 
 /**
  * Cleans all .spec.js files in the dist/server folder,
  * aka server side test files.
  */
-gulp.task('server:test:clean', () => {
+gulp.task('server:test:clean', (done) => {
   return del('dist/server/**/*.spec.js');
 });
 
@@ -179,7 +182,7 @@ gulp.task('client:build:assets', gulp.parallel(
   'client:build:materialize'));
 
 /**
- * Build all files needed client-side
+ * Builds all files needed client-side
  * (.ts, .pug, .html, .sass, .scss, .css, client/static/*).
  */
 gulp.task('client:build', gulp.parallel(
@@ -187,7 +190,7 @@ gulp.task('client:build', gulp.parallel(
   'client:build:assets'));
 
 /**
- * Build all javascript files,
+ * Builds all javascript files,
  * except those needed client-side.
  * NOTE:  when client:build will work,
  *        this should build client too.
@@ -196,3 +199,24 @@ gulp.task('all:build', gulp.parallel(
   'lib:build',
   'server:build',
   'client:build'));
+
+/**
+ * Builds, runs and thereafter cleans
+ * all server side tests.
+ */
+gulp.task('server:test', () => {
+  return gulp.series(
+    'server:test:clean',
+    gulp.parallel('server:build', 'server:test:build'),
+    'server:test:run',
+    'server:test:clean')();
+});
+
+/**
+ * Runs all tests.
+ */
+gulp.task('all:test', gulp.parallel(
+  'client:test',
+  //'lib:test'
+  'server:test'
+));
