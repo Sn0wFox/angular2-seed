@@ -35,7 +35,8 @@ This repo adds gulp and production build tools for a Node.js server.
 - ~~Add genericity for static files (build)~~
 - Add genericity for folders other than `client` and `server` (build)
 - ~~Add more logs~~
-- Add equivalent of --progress (webpack) in client:build:ts
+- Add equivalent of --progress (webpack) in client:build:webpack
 - Uglify prod files (client)
 - Separate config (client, server, prod, dev, ...)
 - Migrate to webpack 2
+- ~~Migrate to gulp4~~
