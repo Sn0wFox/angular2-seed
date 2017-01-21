@@ -135,7 +135,9 @@ gulp.task('client:test', (done) => {
     configFile: __dirname + '/karma.conf.js',
     singleRun: true,
     browsers: ["Firefox"]
-  }, done)).start();
+  }, () => {
+    done();   // If only passing "done", the --continue flag makes it fail
+  })).start();
 });
 
 /**
@@ -210,7 +212,7 @@ gulp.task('server:test', gulp.series(
  * Runs all tests.
  */
 gulp.task('all:test', gulp.series(
-  'client:test',
-  //'lib:test'
-  'server:test'
+  //'lib:test',
+  'server:test',
+  'client:test'
 ));
