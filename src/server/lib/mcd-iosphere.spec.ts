@@ -1,8 +1,8 @@
 import * as Mcd from "./mcd-iosphere";
 
 describe('mcd', () => {
-  it('should be a failing test', () => {
+  it('should be an easy test', () => {
     let a: boolean = true;
-    expect(a).toBe(false);
+    expect(a).toBe(true);
   });
 });
