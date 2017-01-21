@@ -8,7 +8,7 @@
     "server": "webpack-dev-server --inline --progress --port 3000 --content-base src",
     "build:client": "gulp log:deprecated && webpack --progress",
     "start": "npm run server",
-    "test": "gulp all:test"
+    "test": "gulp all:test --continue"
   },
   "contributors": [
     "Rob Wormald <robwormald@gmail.com>",

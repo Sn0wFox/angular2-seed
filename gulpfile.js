@@ -154,18 +154,14 @@ gulp.task('server:test:build', () => {
  */
 gulp.task('server:test:run', (done) => {
   return gulp.src('dist/server/**/*.spec.js')
-    .pipe(gjasmine())
-    .on('error', (err) => {
-      gutil.log(err);
-      return done();
-    });
+    .pipe(gjasmine());
 });
 
 /**
  * Cleans all .spec.js files in the dist/server folder,
  * aka server side test files.
  */
-gulp.task('server:test:clean', (done) => {
+gulp.task('server:test:clean', () => {
   return del('dist/server/**/*.spec.js');
 });
 
@@ -204,13 +200,11 @@ gulp.task('all:build', gulp.parallel(
  * Builds, runs and thereafter cleans
  * all server side tests.
  */
-gulp.task('server:test', () => {
-  return gulp.series(
+gulp.task('server:test', gulp.series(
     'server:test:clean',
     gulp.parallel('server:build', 'server:test:build'),
     'server:test:run',
-    'server:test:clean')();
-});
+    'server:test:clean'));
 
 /**
  * Runs all tests.
