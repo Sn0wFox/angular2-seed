@@ -209,7 +209,7 @@ gulp.task('server:test', gulp.series(
 /**
  * Runs all tests.
  */
-gulp.task('all:test', gulp.parallel(
+gulp.task('all:test', gulp.series(
   'client:test',
   //'lib:test'
   'server:test'
