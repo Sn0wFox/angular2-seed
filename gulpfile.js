@@ -19,11 +19,66 @@ const wpconf = require('./webpack.config.js');
 
 /* BASIC TASKS */
 
+/* lib */
+
+
+/**
+ * Compiles TypeScript files from src/lib
+ * using the typings, and generates .map.js files too.
+ */
+gulp.task('lib:build:ts', () => {
+  return gulp
+    .src(['src/lib/**/*.ts', 'node_modules/@types/**/*.ts', 'src/custom-typings/**/*.ts'])
+    .pipe(sourcemaps.init())
+    .pipe(typescript(tscConfig.compilerOptions))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest("dist/lib"));
+});
+
+/**
+ * Cleans all files in the dist/lib folder,
+ * aka lib files.
+ */
+gulp.task('lib:clean', () => {
+  return del('dist/server/**/*');
+});
+
+/**
+ * Builds all .spec.ts files for the lib,
+ * needed to run lib tests.
+ */
+gulp.task('lib:test:build', () => {
+  return gulp.src("src/lib/**/*.spec.ts")
+    .pipe(typescript(tscConfig.compilerOptions))
+    .pipe(gulp.dest('dist/lib'));
+});
+
+/**
+ * Runs all files .spec.js for the lib,
+ * aka lib tests.
+ */
+gulp.task('lib:test:run', (done) => {
+  return gulp.src('dist/lib/**/*.spec.js')
+    .pipe(gjasmine());
+});
+
+/**
+ * Cleans all .spec.js files in the dist/lib folder,
+ * aka lib test files.
+ */
+gulp.task('lib:test:clean', () => {
+  return del('dist/lib/**/*.spec.js');
+});
+
+
+/* server */
+
+
 /**
  * Compiles TypeScript files from src/server
  * using the typings, and generates .map.js files too.
  */
-gulp.task('server:build', () => {
+gulp.task('server:build:ts', () => {
   return gulp
     .src(['src/server/**/*.ts', 'node_modules/@types/**/*.ts', 'src/custom-typings/**/*.ts', '!src/server/**/*.spec.ts'])
     .pipe(sourcemaps.init())
@@ -33,17 +88,43 @@ gulp.task('server:build', () => {
 });
 
 /**
- * Compiles TypeScript files from src/lib
- * using the typings, and generates .map.js files too.
+ * Cleans all files in the dist/server folder,
+ * aka server side files.
  */
-gulp.task('lib:build', () => {
-  return gulp
-    .src(['src/lib/**/*.ts', 'node_modules/@types/**/*.ts', 'src/custom-typings/**/*.ts'])
-    .pipe(sourcemaps.init())
-    .pipe(typescript(tscConfig.compilerOptions))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest("dist/lib"));
+gulp.task('server:clean', () => {
+  return del('dist/server/**/*');
 });
+
+/**
+ * Builds all .spec.ts files server side,
+ * needed to run server-side tests.
+ */
+gulp.task('server:test:build', () => {
+  return gulp.src("src/server/**/*.spec.ts")
+    .pipe(typescript(tscConfig.compilerOptions))
+    .pipe(gulp.dest('dist/server'));
+});
+
+/**
+ * Runs all files .spec.js server side,
+ * aka server side tests.
+ */
+gulp.task('server:test:run', (done) => {
+  return gulp.src('dist/server/**/*.spec.js')
+    .pipe(gjasmine());
+});
+
+/**
+ * Cleans all .spec.js files in the dist/server folder,
+ * aka server side test files.
+ */
+gulp.task('server:test:clean', () => {
+  return del('dist/server/**/*.spec.js');
+});
+
+
+/* client */
+
 
 /**
  * Build client javascript with webpack.
@@ -109,6 +190,24 @@ gulp.task('client:build:static', () => {
 });
 
 /**
+ * Single runs client-side tests.
+ * NOTE: Forefox browser needs to be installed !
+ */
+gulp.task('client:test', (done) => {
+  return (new karma.Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true,
+    browsers: ["Firefox"]
+  }, () => {
+    done();   // If only passing "done", the --continue flag makes it fail
+  })).start();
+});
+
+
+/* others */
+
+
+/**
  * Cleans the dist folder by removing it.
  */
 gulp.task('all:clean', () => {
@@ -126,75 +225,21 @@ gulp.task('log:deprecated', () => {
     "Please be aware that this may not be avaiillable in a future version."));
 });
 
-/**
- * Single runs client-side tests.
- * NOTE: Forefox browser needs to be installed !
- */
-gulp.task('client:test', (done) => {
-  return (new karma.Server({
-    configFile: __dirname + '/karma.conf.js',
-    singleRun: true,
-    browsers: ["Firefox"]
-  }, () => {
-    done();   // If only passing "done", the --continue flag makes it fail
-  })).start();
-});
-
-/**
- * Builds all .spec.ts files server side,
- * needed to run server-side tests.
- */
-gulp.task('server:test:build', () => {
-  return gulp.src("src/server/**/*.spec.ts")
-    .pipe(typescript(tscConfig.compilerOptions))
-    .pipe(gulp.dest('dist/server'));
-});
-
-/**
- * Runs all files .spec.js server side,
- * aka server side tests.
- */
-gulp.task('server:test:run', (done) => {
-  return gulp.src('dist/server/**/*.spec.js')
-    .pipe(gjasmine());
-});
-
-/**
- * Cleans all .spec.js files in the dist/server folder,
- * aka server side test files.
- */
-gulp.task('server:test:clean', () => {
-  return del('dist/server/**/*.spec.js');
-});
-
-/**
- * Builds all .spec.ts files for the lib,
- * needed to run lib tests.
- */
-gulp.task('lib:test:build', () => {
-  return gulp.src("src/lib/**/*.spec.ts")
-    .pipe(typescript(tscConfig.compilerOptions))
-    .pipe(gulp.dest('dist/lib'));
-});
-
-/**
- * Runs all files .spec.js for the lib,
- * aka lib tests.
- */
-gulp.task('lib:test:run', (done) => {
-  return gulp.src('dist/lib/**/*.spec.js')
-    .pipe(gjasmine());
-});
-
-/**
- * Cleans all .spec.js files in the dist/lib folder,
- * aka lib test files.
- */
-gulp.task('lib:test:clean', () => {
-  return del('dist/lib/**/*.spec.js');
-});
 
 /* COMPOSED TASKS */
+
+
+/**
+ * Builds all files needed for the lib.
+ */
+gulp.task('lib:build', gulp.parallel(
+  'lib:build:ts'));
+
+/**
+ * Builds all files needed server side.
+ */
+gulp.task('server:build', gulp.parallel(
+  'server:build:ts'));
 
 /**
  * Builds all files other than javascript needed client-side.
@@ -224,6 +269,16 @@ gulp.task('all:build', gulp.parallel(
   'lib:build',
   'server:build',
   'client:build'));
+  
+/**
+ * Builds, runs and thereafter cleans
+ * all lib tests.
+ */
+gulp.task('lib:test', gulp.series(
+    'lib:test:clean',
+    gulp.parallel('lib:build', 'lib:test:build'),
+    'lib:test:run',
+    'lib:test:clean'));
 
 /**
  * Builds, runs and thereafter cleans
@@ -234,16 +289,6 @@ gulp.task('server:test', gulp.series(
     gulp.parallel('server:build', 'server:test:build'),
     'server:test:run',
     'server:test:clean'));
-    
-/**
- * Builds, runs and thereafter cleans
- * all lib tests.
- */
-gulp.task('lib:test', gulp.series(
-    'lib:test:clean',
-    gulp.parallel('lib:build', 'lib:test:build'),
-    'lib:test:run',
-    'lib:test:clean'));
 
 /**
  * Runs all tests.
