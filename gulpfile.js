@@ -138,17 +138,30 @@ gulp.task('client:test', (done) => {
   }, done)).start();
 });
 
+/**
+ * Builds all .spec.ts files server side,
+ * needed to run server-side tests.
+ */
 gulp.task('server:test:build', () => {
   return gulp.src("src/server/**/*.spec.ts")
     .pipe(typescript(tscConfig.compilerOptions))
     .pipe(gulp.dest('dist/server'));
 });
 
+/**
+ * Runs all files .spec.js server side,
+ * aka server side tests.
+ */
 gulp.task('server:test:run', () => {
   return gulp.src("dist/server/**/*.spec.js")
-    .pipe(gjasmine());
+    .pipe(gjasmine())
+    .on('error', gutil.log);
 });
 
+/**
+ * Cleans all .spec.js files in the dist/server folder,
+ * aka server side test files.
+ */
 gulp.task('server:test:clean', () => {
   return del('dist/server/**/*.spec.js');
 });
