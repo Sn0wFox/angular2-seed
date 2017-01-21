@@ -167,6 +167,33 @@ gulp.task('server:test:clean', () => {
   return del('dist/server/**/*.spec.js');
 });
 
+/**
+ * Builds all .spec.ts files for the lib,
+ * needed to run lib tests.
+ */
+gulp.task('lib:test:build', () => {
+  return gulp.src("src/lib/**/*.spec.ts")
+    .pipe(typescript(tscConfig.compilerOptions))
+    .pipe(gulp.dest('dist/lib'));
+});
+
+/**
+ * Runs all files .spec.js for the lib,
+ * aka lib tests.
+ */
+gulp.task('lib:test:run', (done) => {
+  return gulp.src('dist/lib/**/*.spec.js')
+    .pipe(gjasmine());
+});
+
+/**
+ * Cleans all .spec.js files in the dist/lib folder,
+ * aka lib test files.
+ */
+gulp.task('lib:test:clean', () => {
+  return del('dist/lib/**/*.spec.js');
+});
+
 /* COMPOSED TASKS */
 
 /**
@@ -207,12 +234,22 @@ gulp.task('server:test', gulp.series(
     gulp.parallel('server:build', 'server:test:build'),
     'server:test:run',
     'server:test:clean'));
+    
+/**
+ * Builds, runs and thereafter cleans
+ * all lib tests.
+ */
+gulp.task('lib:test', gulp.series(
+    'lib:test:clean',
+    gulp.parallel('lib:build', 'lib:test:build'),
+    'lib:test:run',
+    'lib:test:clean'));
 
 /**
  * Runs all tests.
  */
 gulp.task('all:test', gulp.series(
-  //'lib:test',
+  'lib:test',
   'server:test',
   'client:test'
 ));
